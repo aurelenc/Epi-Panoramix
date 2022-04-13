@@ -1,0 +1,8 @@
+*.a
+*.o
+*.out
+*.gc*
+panoramix
+unit_tests
+vscode/
+idea/
