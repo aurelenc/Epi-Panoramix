@@ -4,5 +4,5 @@
 *.gc*
 panoramix
 unit_tests
-vscode/
-idea/
+.vscode/
+.idea/

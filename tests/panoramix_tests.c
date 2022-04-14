@@ -6,7 +6,7 @@
 */
 
 #include <criterion/criterion.h>
-#include "../include/panoramix.hpp"
+#include "../include/panoramix.h"
 
 Test(github_action, test)
 {

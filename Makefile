@@ -7,12 +7,10 @@ SRC	=	src/main.c\
 
 OBJ	=	${SRC:.c=.o}
 
-CFLAGS	=	-Wall -Werror -lpthread
-
-LDFLAGS	=	-I include
+CFLAGS	=	-Wall -Werror -lpthread -I include/
 
 $(NAME): $(OBJ)
-	gcc $(OBJ) -o $(NAME) $(LDFLAGS)
+	gcc $(OBJ) -o $(NAME)
 
 clean:
 	rm -f $(OBJ)
