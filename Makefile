@@ -4,6 +4,7 @@ TESTS_NAME	=	unit_tests
 
 SRC	=	src/main.c\
 		src/panoramix.c\
+		src/villager.c\
 
 OBJ	=	${SRC:.c=.o}
 
