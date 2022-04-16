@@ -32,5 +32,11 @@ typedef struct villager_s {
     common_data_t *common;
 } villager_t;
 
+typedef struct druid_s {
+    int *nb_potions;
+    params_t *params;
+    common_data_t *common;
+} druid_t;
+
 int panoramix(int ac, char **av);
 void *villager_exec(void *data);
