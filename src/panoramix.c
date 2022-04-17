@@ -26,14 +26,56 @@ bool check_error(int ac, char **av, params_t *parameters)
     return false;
 }
 
+int panoramix_run
+(params_t *params, common_data_t *common, druid_t *druid, int *nb_potions)
+{
+    pthread_t druid_thread;
+    pthread_t *villager_threads =
+    calloc(sizeof(pthread_t), params->nb_villagers + 1);
+    villager_t *villagers =
+    calloc(sizeof(villager_t), params->nb_villagers + 1);
+
+    if (!villager_threads || !villagers)
+        return 84;
+    pthread_create(&druid_thread, NULL, druid_exec, druid);
+    for (int i = 0; i < params->nb_villagers; i++) {
+        villagers[i].id = i;
+        villagers[i].params = params;
+        villagers[i].common = common;
+        villagers[i].nb_fights = params->nb_fights;
+        villagers[i].nb_potions = nb_potions;
+        pthread_create(&villager_threads[i], NULL, villager_exec, &villagers[i]);
+    }
+    for (int i = 0; i < params->nb_villagers; i++)
+        pthread_join(villager_threads[i], NULL);
+    pthread_join(druid_thread, NULL);
+    free(villager_threads);
+    free(villagers);
+    return 0;
+}
+
 int panoramix(int ac, char **av)
 {
-    params_t parameters;
+    params_t params;
+    common_data_t common;
+    druid_t druid;
+    int nb_potions;
 
-    if (check_error(ac, av, &parameters)) {
+    if (check_error(ac, av, &params)) {
         printf("USAGE: ./panoramix ");
         printf("<nb_villagers> <pot_size> <nb_fights> <nb_refills>\n");
         return 84;
     }
-    return 0;
+    if (pthread_mutex_init(&common.druid_sleep_mutex, NULL) != 0)
+        return 84;
+    if (pthread_mutex_init(&common.druid_working_mutex, NULL) != 0)
+        return 84;
+    if (sem_init(&common.villagers_semaphore, 0, params.nb_villagers) != 0)
+        return 84;
+    nb_potions = params.pot_size;
+    druid.nb_potions = &nb_potions;
+    druid.params = &params;
+    druid.common = &common;
+    pthread_mutex_lock(&common.druid_sleep_mutex);
+    return panoramix_run(&params, &common, &druid, &nb_potions);
 }

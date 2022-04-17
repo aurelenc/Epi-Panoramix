@@ -1,3 +1,10 @@
+##
+## EPITECH PROJECT, 2022
+## Panoramix
+## File description:
+## Makefile
+##
+
 NAME	=	panoramix
 
 TESTS_NAME	=	unit_tests

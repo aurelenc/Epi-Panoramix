@@ -40,3 +40,4 @@ typedef struct druid_s {
 
 int panoramix(int ac, char **av);
 void *villager_exec(void *data);
+void *druid_exec(void *data);
