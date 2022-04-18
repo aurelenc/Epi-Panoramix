@@ -1,7 +1,8 @@
 NAME	=	unit_tests
 
-SRC	=	../src/main.c
-SRC	=	../src/panoramix.c
+SRC	=	../src/panoramix.c\
+		../src/villager.c\
+		../src/druid.c\
 
 TEST_SRC	=	panoramix_tests.c
 

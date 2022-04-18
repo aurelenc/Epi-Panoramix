@@ -16,7 +16,7 @@ SRC	=	src/main.c\
 
 OBJ	=	${SRC:.c=.o}
 
-CFLAGS	=	-Wall -Werror -lpthread -I include/
+CFLAGS	=	-Wall -Werror -lpthread -I include/ -g
 
 $(NAME): $(OBJ)
 	gcc $(OBJ) -o $(NAME)
