@@ -27,7 +27,7 @@ bool check_error(int ac, char **av, params_t *parameters)
 }
 
 int panoramix_run
-(params_t *params, common_data_t *common, druid_t *druid, int *nb_potions)
+(params_t *params, common_data_t *common, druid_t *druid)
 {
     pthread_t druid_thread;
     pthread_t *villager_threads =
@@ -43,7 +43,6 @@ int panoramix_run
         villagers[i].params = params;
         villagers[i].common = common;
         villagers[i].nb_fights = params->nb_fights;
-        villagers[i].nb_potions = nb_potions;
         pthread_create(&villager_threads[i], NULL, villager_exec, &villagers[i]);
     }
     for (int i = 0; i < params->nb_villagers; i++)
@@ -59,7 +58,6 @@ int panoramix(int ac, char **av)
     params_t params;
     common_data_t common;
     druid_t druid;
-    int nb_potions;
 
     if (check_error(ac, av, &params)) {
         printf("USAGE: ./panoramix ");
@@ -72,10 +70,9 @@ int panoramix(int ac, char **av)
         return 84;
     if (sem_init(&common.villagers_semaphore, 0, params.nb_villagers) != 0)
         return 84;
-    nb_potions = params.pot_size;
-    druid.nb_potions = &nb_potions;
+    common.nb_potions = params.pot_size;
     druid.params = &params;
     druid.common = &common;
     pthread_mutex_lock(&common.druid_sleep_mutex);
-    return panoramix_run(&params, &common, &druid, &nb_potions);
+    return panoramix_run(&params, &common, &druid);
 }

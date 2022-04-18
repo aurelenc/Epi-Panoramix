@@ -19,6 +19,7 @@ typedef struct params_s {
 } params_t;
 
 typedef struct common_data_s {
+    int nb_potions;
     pthread_mutex_t druid_sleep_mutex;
     pthread_mutex_t druid_working_mutex;
     sem_t villagers_semaphore;
@@ -27,13 +28,11 @@ typedef struct common_data_s {
 typedef struct villager_s {
     int id;
     int nb_fights;
-    int *nb_potions;
     params_t *params;
     common_data_t *common;
 } villager_t;
 
 typedef struct druid_s {
-    int *nb_potions;
     params_t *params;
     common_data_t *common;
 } druid_t;

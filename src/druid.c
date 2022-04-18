@@ -14,7 +14,7 @@ void druid_refill(druid_t *druid)
     printf("Druid: Ah! Yes, yes, I'm awake! Working on it! Beware I can only");
     printf(" make %d more refills after this one.\n",
     druid->params->nb_refills);
-    *druid->nb_potions = druid->params->pot_size;
+    druid->common->nb_potions = druid->params->pot_size;
 }
 
 void *druid_exec(void *data)
