@@ -16,10 +16,12 @@ SRC	=	src/main.c\
 
 OBJ	=	${SRC:.c=.o}
 
-CFLAGS	=	-Wall -Werror -pthread -lpthread -I include/
+CFLAGS	=	-Wall -Werror -I include/
+
+LDFLAGS	=	-lpthread
 
 $(NAME): $(OBJ)
-	gcc $(OBJ) -o $(NAME)
+	gcc $(OBJ) -o $(NAME) $(LDFLAGS)
 
 clean:
 	rm -f $(OBJ)
