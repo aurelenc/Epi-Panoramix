@@ -8,7 +8,7 @@ TEST_SRC	=	panoramix_tests.c
 
 OBJ	=	${SRC:.c=.o} ${TEST_SRC:.c=.o}
 
-CFLAGS	=	-Wall -Werror -lpthread
+CFLAGS	=	-Wall -Werror -pthread -lpthread
 
 LDFLAGS = -lcriterion --coverage
 
