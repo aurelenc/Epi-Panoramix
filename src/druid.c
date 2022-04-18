@@ -10,12 +10,12 @@
 
 void druid_refill(druid_t *druid)
 {
-    pthread_mutex_lock(&druid->common->druid_working_mutex);
     druid->params->nb_refills--;
-    printf("Druid: Ah! Yes, yes, I'm awake! Working on it! Beware I can only");
-    printf(" make %d more refills after this one.\n",
+    printf("Druid: Ah! Yes, yes, I'm awake! Working on it! Beware I can only make %d more refills after this one.\n",
     druid->params->nb_refills);
     druid->common->nb_potions = druid->params->pot_size;
+    if (druid->params->nb_refills == 0)
+        printf("Druid: I'm out of viscum. I'm going back to... zZz\n");
     pthread_mutex_unlock(&druid->common->druid_working_mutex);
 }
 
@@ -28,6 +28,5 @@ void *druid_exec(void *data)
         pthread_mutex_lock(&(druid->common->druid_sleep_mutex));
         druid_refill(druid);
     }
-    printf("Druid: I'm out of viscum. I'm going back to... zZz\n");
     return data;
 }
