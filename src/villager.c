@@ -6,12 +6,18 @@
 */
 
 #include "panoramix.h"
+#include <stdlib.h>
 #include <stdio.h>
 
 void villager_need_potion(villager_t *villager)
 {
     pthread_mutex_lock(&villager->common->druid_working_mutex);
     printf("Villager %d: Hey Pano wake up! We need more potion.\n", villager->id);
+    if (villager->params->nb_refills == 0) {
+        printf("Villager %d: No more potions, I'm going to sleep now.\n", villager->id);
+        pthread_mutex_unlock(&villager->common->druid_working_mutex);
+        exit(0);
+    }
     pthread_mutex_unlock(&(villager->common->druid_sleep_mutex));
 }
 
