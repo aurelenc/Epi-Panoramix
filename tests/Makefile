@@ -6,17 +6,15 @@ SRC	=	../src/panoramix.c\
 
 TEST_SRC	=	panoramix_tests.c
 
-OBJ	=	${SRC:.c=.o} ${TEST_SRC:.c=.o}
-
 CFLAGS	=	-Wall -Werror
 
-LDFLAGS = -lpthread -lcriterion --coverage
+LDFLAGS = -lpthread -lcriterion --coverage -I ../include/
 
-$(NAME): $(OBJ)
-	gcc $(OBJ) -o $(NAME) ${LDFLAGS}
+$(NAME):
+	gcc $(SRC) $(TEST_SRC) -o $(NAME) ${LDFLAGS}
 
 clean:
-	rm -f $(OBJ)
+	rm -f *.gc*
 
 fclean: clean
 	rm -f $(NAME)
