@@ -17,14 +17,17 @@ void villager_need_potion(villager_t *villager)
 
 void villager_fight(villager_t *villager)
 {
+    sem_wait(&(villager->common->villagers_semaphore));
     wait_for_mutex(&villager->common->druid_working_mutex);
     villager->nb_fights--;
     printf("Villager %d: Take that roman scum! Only %d left.\n",
     villager->id, villager->nb_fights);
+    sem_post(&(villager->common->villagers_semaphore));
 }
 
 void villager_drink(villager_t *villager)
 {
+    sem_wait(&(villager->common->villagers_semaphore));
     wait_for_mutex(&villager->common->druid_working_mutex);
     printf("Villager %d: I need a drink... I see %d servings left.\n",
     villager->id, villager->common->nb_potions);
@@ -32,6 +35,7 @@ void villager_drink(villager_t *villager)
         villager_need_potion(villager);
     }
     villager->common->nb_potions--;
+    sem_post(&(villager->common->villagers_semaphore));
 }
 
 void *villager_exec(void *data)
@@ -41,10 +45,8 @@ void *villager_exec(void *data)
     wait_for_mutex(&villager->common->druid_working_mutex);
     printf("Villager %d: Going into battle !\n", villager->id);
     for (int i = 0; i <= villager->nb_fights + 1; i++) {
-        sem_wait(&(villager->common->villagers_semaphore));
         villager_drink(villager);
         villager_fight(villager);
-        sem_post(&(villager->common->villagers_semaphore));
     }
     printf("Villager %d: I'm going to sleep now.\n", villager->id);
     return data;
