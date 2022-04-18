@@ -26,23 +26,35 @@ bool check_error(int ac, char **av, params_t *parameters)
     return false;
 }
 
-int panoramix_run
-(params_t *params, common_data_t *common, druid_t *druid)
+villager_t *create_villagers(params_t *params, common_data_t *common)
 {
-    pthread_t druid_thread;
-    pthread_t *villager_threads =
-    calloc(sizeof(pthread_t), params->nb_villagers + 1);
     villager_t *villagers =
     calloc(sizeof(villager_t), params->nb_villagers + 1);
 
-    if (!villager_threads || !villagers)
-        return 84;
-    pthread_create(&druid_thread, NULL, druid_exec, druid);
     for (int i = 0; i < params->nb_villagers; i++) {
         villagers[i].id = i;
         villagers[i].params = params;
         villagers[i].common = common;
         villagers[i].nb_fights = params->nb_fights;
+    }
+    return villagers;
+}
+
+int panoramix_run
+(params_t *params, common_data_t *common, druid_t *druid)
+{
+    pthread_t druid_thread;
+    villager_t *villagers;
+    pthread_t *villager_threads =
+    calloc(sizeof(pthread_t), params->nb_villagers + 1);
+
+    if (!villager_threads)
+        return 84;
+    villagers = create_villagers(params, common);
+    if (!villagers)
+        return 84;
+    pthread_create(&druid_thread, NULL, druid_exec, druid);
+    for (int i = 0; i < params->nb_villagers; i++) {
         pthread_create(&villager_threads[i], NULL, villager_exec, &villagers[i]);
     }
     for (int i = 0; i < params->nb_villagers; i++)
