@@ -38,5 +38,6 @@ typedef struct druid_s {
 } druid_t;
 
 int panoramix(int ac, char **av);
+void wait_for_mutex(pthread_mutex_t *mutex);
 void *villager_exec(void *data);
 void *druid_exec(void *data);

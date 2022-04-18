@@ -17,8 +17,7 @@ void villager_need_potion(villager_t *villager)
 
 void villager_fight(villager_t *villager)
 {
-    pthread_mutex_lock(&villager->common->druid_working_mutex);
-    pthread_mutex_unlock(&villager->common->druid_working_mutex);
+    wait_for_mutex(&villager->common->druid_working_mutex);
     villager->nb_fights--;
     printf("Villager %d: Take that roman scum! Only %d left.\n",
     villager->id, villager->nb_fights);
@@ -26,8 +25,7 @@ void villager_fight(villager_t *villager)
 
 void villager_drink(villager_t *villager)
 {
-    pthread_mutex_lock(&villager->common->druid_working_mutex);
-    pthread_mutex_unlock(&villager->common->druid_working_mutex);
+    wait_for_mutex(&villager->common->druid_working_mutex);
     printf("Villager %d: I need a drink... I see %d servings left.\n",
     villager->id, villager->common->nb_potions);
     if (villager->common->nb_potions == 0) {
@@ -40,8 +38,7 @@ void *villager_exec(void *data)
 {
     villager_t *villager = (villager_t *)data;
 
-    pthread_mutex_lock(&villager->common->druid_working_mutex);
-    pthread_mutex_unlock(&villager->common->druid_working_mutex);
+    wait_for_mutex(&villager->common->druid_working_mutex);
     printf("Villager %d: Going into battle !\n", villager->id);
     for (int i = 0; i <= villager->nb_fights + 1; i++) {
         sem_wait(&(villager->common->villagers_semaphore));

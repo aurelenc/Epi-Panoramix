@@ -40,6 +40,12 @@ villager_t *create_villagers(params_t *params, common_data_t *common)
     return villagers;
 }
 
+void wait_for_mutex(pthread_mutex_t *mutex)
+{
+    pthread_mutex_lock(mutex);
+    pthread_mutex_unlock(mutex);
+}
+
 int panoramix_run
 (params_t *params, common_data_t *common, druid_t *druid)
 {
