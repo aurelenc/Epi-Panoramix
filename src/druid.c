@@ -11,7 +11,8 @@
 void druid_refill(druid_t *druid)
 {
     druid->params->nb_refills--;
-    printf("Druid: Ah! Yes, yes, I'm awake! Working on it! Beware I can only make %d more refills after this one.\n",
+    printf("Druid: Ah! Yes, yes, I'm awake! Working on it! Beware I can only \
+make %d more refills after this one.\n",
     druid->params->nb_refills);
     druid->common->nb_potions = druid->params->pot_size;
     if (druid->params->nb_refills == 0)

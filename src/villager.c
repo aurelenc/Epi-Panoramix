@@ -11,9 +11,11 @@
 
 void villager_need_potion(villager_t *villager)
 {
-    printf("Villager %d: Hey Pano wake up! We need more potion.\n", villager->id);
+    printf("Villager %d: Hey Pano wake up! We need more potion.\n",
+    villager->id);
     if (villager->params->nb_refills == 0) {
-        printf("Villager %d: No more potions, I'm going to sleep now.\n", villager->id);
+        printf("Villager %d: No more potions, I'm going to sleep now.\n",
+        villager->id);
         exit(0);
     }
     pthread_mutex_unlock(&villager->common->druid_sleep_mutex);
