@@ -42,7 +42,7 @@ void villager_drink(villager_t *villager)
     sem_post(&(villager->common->villagers_semaphore));
 }
 
-void *villager_exec(void *data)
+void villager_exec(void *data)
 {
     villager_t *villager = (villager_t *)data;
 
@@ -52,5 +52,4 @@ void *villager_exec(void *data)
         villager_fight(villager);
     }
     printf("Villager %d: I'm going to sleep now.\n", villager->id);
-    return data;
 }

@@ -19,7 +19,7 @@ make %d more refills after this one.\n",
         printf("Druid: I'm out of viscum. I'm going back to... zZz\n");
 }
 
-void *druid_exec(void *data)
+void druid_exec(void *data)
 {
     druid_t *druid = (druid_t *)data;
 
@@ -30,5 +30,4 @@ void *druid_exec(void *data)
         druid_refill(druid);
     }
     sem_post(&druid->common->druid_working_mutex);
-    return data;
 }

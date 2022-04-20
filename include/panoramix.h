@@ -38,5 +38,5 @@ typedef struct druid_s {
 } druid_t;
 
 int panoramix(int ac, char **av);
-void *villager_exec(void *data);
-void *druid_exec(void *data);
+void villager_exec(void *data);
+void druid_exec(void *data);

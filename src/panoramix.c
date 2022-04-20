@@ -48,14 +48,13 @@ int panoramix_run
     pthread_t *villager_thread =
     calloc(sizeof(pthread_t), params->nb_villagers + 1);
 
-    if (!villager_thread)
-        return 84;
     villager = create_villagers(params, common);
-    if (!villager)
+    if (!villager_thread || !villager)
         return 84;
-    pthread_create(&druid_thread, NULL, druid_exec, druid);
+    pthread_create(&druid_thread, NULL, (void *)druid_exec, druid);
     for (int i = 0; i < params->nb_villagers; i++) {
-        pthread_create(&villager_thread[i], NULL, villager_exec, &villager[i]);
+        pthread_create(&villager_thread[i], NULL, (void *)villager_exec,
+        &villager[i]);
     }
     for (int i = 0; i < params->nb_villagers; i++)
         pthread_join(villager_thread[i], NULL);
