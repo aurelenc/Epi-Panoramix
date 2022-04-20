@@ -1,3 +1,10 @@
+##
+## EPITECH PROJECT, 2022
+## Panoramix
+## File description:
+## Makefile
+##
+
 NAME	=	unit_tests
 
 SRC	=	../src/panoramix.c\

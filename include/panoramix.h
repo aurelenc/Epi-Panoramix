@@ -21,7 +21,7 @@ typedef struct params_s {
 typedef struct common_data_s {
     int nb_potions;
     pthread_mutex_t druid_sleep_mutex;
-    pthread_mutex_t druid_working_mutex;
+    sem_t druid_working_mutex;
     sem_t villagers_semaphore;
 } common_data_t;
 
@@ -38,6 +38,5 @@ typedef struct druid_s {
 } druid_t;
 
 int panoramix(int ac, char **av);
-void wait_for_mutex(pthread_mutex_t *mutex);
 void *villager_exec(void *data);
 void *druid_exec(void *data);

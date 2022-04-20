@@ -40,12 +40,6 @@ villager_t *create_villagers(params_t *params, common_data_t *common)
     return villagers;
 }
 
-void wait_for_mutex(pthread_mutex_t *mutex)
-{
-    pthread_mutex_lock(mutex);
-    pthread_mutex_unlock(mutex);
-}
-
 int panoramix_run
 (params_t *params, common_data_t *common, druid_t *druid)
 {
@@ -84,9 +78,9 @@ int panoramix(int ac, char **av)
     }
     if (pthread_mutex_init(&common.druid_sleep_mutex, NULL) != 0)
         return 84;
-    if (pthread_mutex_init(&common.druid_working_mutex, NULL) != 0)
+    if (sem_init(&common.druid_working_mutex, 0, 1) != 0)
         return 84;
-    if (sem_init(&common.villagers_semaphore, 0, params.nb_villagers) != 0)
+    if (sem_init(&common.villagers_semaphore, 0, 1) != 0)
         return 84;
     common.nb_potions = params.pot_size;
     druid.params = &params;
