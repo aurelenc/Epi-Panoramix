@@ -1,10 +1,9 @@
 name: Mirroring
 
 on:
-  push:
-    branches: [ main ]
-  delete:
-    branches: [ main ]
+  workflow_run:
+    workflows: [ Build ]
+    types: [ completed ]
 
 jobs:
   to_github:
