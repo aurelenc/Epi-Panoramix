@@ -7,6 +7,7 @@
 
 #include "panoramix.h"
 #include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
 
 void villager_need_potion(villager_t *villager)
@@ -47,9 +48,11 @@ void villager_exec(void *data)
     villager_t *villager = (villager_t *)data;
 
     printf("Villager %d: Going into battle !\n", villager->id);
+    usleep(500);
     for (int i = 0; i <= villager->nb_fights + 1; i++) {
         villager_drink(villager);
         villager_fight(villager);
     }
+    usleep(500);
     printf("Villager %d: I'm going to sleep now.\n", villager->id);
 }
